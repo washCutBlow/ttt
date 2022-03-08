@@ -1,15 +1,15 @@
 # Difft-sdk-python
-## build 
+## Build 
 ```shell
 make build
 ```
 
-## install
+## Install
 ```shell
 make install
 ```
 
-## example
+## Example
 ```python
 import requests
 import json

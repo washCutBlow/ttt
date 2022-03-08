@@ -2,9 +2,9 @@ import requests
 import collections
 import hmac, hashlib
 from urllib.parse import urlparse, parse_qs
-from src.utils import *
 
-from src.constants import *
+from difft.utils import *
+from difft.constants import *
 
 class Signature:
     def __init__(self, timestamp: int, nonce: str, algorithm: str, signature: str) -> None:

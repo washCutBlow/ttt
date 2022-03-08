@@ -1,10 +1,9 @@
-from enum import auto
 import requests
 import unittest
 import json
 
-from src.authenticator import Authenticator
-from src.utils import *
+from difft.auth import Authenticator
+from difft.utils import *
 
 class TestSign(unittest.TestCase):
 
@@ -85,10 +84,9 @@ class TestSign(unittest.TestCase):
         body = {"wuid": "123123", "fileHash": "1123", "fileSize": 100, "gids": ["1", "2"], "numbers": ["1", "2"]}
         url = "https://openapi.test.difft.org/v1/file/isExists"
         resp = requests.post(url=url, json=body, auth=self.my_auth)
-        print(resp.text)
         data = json.loads(resp.text)
         self.assertEqual(resp.status_code, 200)
-        self.assertEqual(data.get("status", -1), 0)
+        self.assertIn(data.get("status", -1), [0,2]) # file no permission
 
 if __name__ == '__main__':
     unittest.main()

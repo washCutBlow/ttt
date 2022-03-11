@@ -42,7 +42,7 @@ class TestSign(unittest.TestCase):
         self.assertEqual(data_update.get("status", -1), 0)
 
     
-    def test__group(self):
+    def test_group(self):
         """
         创建组
         """

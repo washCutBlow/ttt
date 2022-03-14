@@ -32,3 +32,9 @@ data = json.loads(resp.text)
 python3 -m unittest discover
 ```
 
+# TODO
+* [x] Auth
+* [ ] Attachment APIs
+* [ ] Group APIs
+* [ ] Account APIs
+* [ ] Team APIs

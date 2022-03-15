@@ -69,7 +69,7 @@ class DifftClient:
                     fileSize = fileSize
                 )
 
-    def download_attachment(self, wuid, key, authorize_id, digest, url=None) -> bytes:
+    def download_attachment(self, wuid, key, authorize_id, cipherHash, url=None) -> bytes:
         key = base64.b64decode(key)
         if not url:
             fileHash = hashlib.sha256(key).digest()
@@ -82,7 +82,7 @@ class DifftClient:
             url = data.get("url")
         attachment_resp = requests.get(url=url)
         attachment = attachment_resp.content
-        return self.decrypt_attachment(attachment, key, bytes.fromhex(digest))
+        return self.decrypt_attachment(attachment, key, bytes.fromhex(cipherHash))
 
     def encrypt_attachment(self, attachment, key):
         if len(key) != 64:

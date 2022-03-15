@@ -53,6 +53,13 @@ class TestSign(unittest.TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(data.get("status", -1), 0)
 
+        """查询groups"""
+        url = "https://openapi.test.difft.org/v1/groups?operator=%2B21013"
+        resp = requests.get(url=url, auth=self.my_auth)
+        data = json.loads(resp.text)
+        self.assertEqual(resp.status_code, 200)
+         self.assertEqual(data.get("status", -1), 0)
+
     def test_send_message(self):
         """
         发送消息

@@ -7,7 +7,7 @@ from difft.utils import *
 
 class TestSign(unittest.TestCase):
 
-    my_auth = Authenticator(appid="06d4bdffbfaeef75a52e", key="KyYfHvRUpVr9NlLSVUZTOE6VPLQd".encode("utf-8"))
+    my_auth = Authenticator(appid="f250845b274f4a5c01", key="w0m6nTOIIspxR0wmGJbEvAOfNnyf".encode("utf-8"))
 
     def test_account(self):
         """

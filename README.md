@@ -1,30 +1,46 @@
 # Difft-sdk-python
-## Build 
+## Install from python package
 ```shell
-make build
+pip install https://git.toolsfdg.net/difftim/difft-sdk-python/releases/download/v1.0.0/difft-1.0.0-py3-none-any.whl
 ```
 
-## Install
+## Install from source code
 ```shell
 make install
 ```
 
 ## Example
 ```python
-import requests
-import json
+import time
+from difft.client import DifftClient
+from difft.message import MessageRequestBuilder
 
-from difft.auth import Authenticator
+APP_ID = "f250845b274f4a5c01"
+APP_SECRET = "w0m6nTOIIspxR0wmGJbEvAOfNnyf"
+BOT_ID="+60000"
 
-"""
-发送消息
-"""
-my_auth = Authenticator(appid="06d4bdffbfaeef75a52e", key="KyYfHvRUpVr9NlLSVUZTOE6VPLQd".encode("utf-8"))
+difft_client = DifftClient(APP_ID, APP_SECRET)
 
-body = {"version": 1,"src": "+85533430156","dest": { "wuid": ["+74708405548"],"type": "USER"},"type": "TEXT","timestamp": 1646105966000,"msg": {"body": "test"}}
-url = "https://openapi.test.difft.org/v1/messages"
-resp = requests.post(url=url, json=body, auth=my_auth)
-data = json.loads(resp.text)
+# send to user
+message = MessageRequestBuilder()                     \
+            .sender(BOT_ID)                           \
+            .to_user(["+76459652574"])                \
+            .message("hello, this is a test message") \
+            .build()
+
+difft_client.send_message(message)
+
+# due to frequncy liit
+time.sleep(1)
+
+# send to group
+message = MessageRequestBuilder()                         \
+            .sender(BOT_ID)                               \
+            .to_group("a9de6b3ae8c8456d888c4532b487e822") \
+            .message("hello, this is a test message")     \
+            .at_user(["+76459652574"])                    \
+            .build()
+difft_client.send_message(message)
 ```
 
 ## Run test

@@ -24,7 +24,7 @@ difft_client = DifftClient(APP_ID, APP_SECRET)
 # production environment
 # difft_client = DifftClient(APP_ID, APP_SECRET, "https://xxx.com")
 
-# send to user
+# send message to individuel user
 message = MessageRequestBuilder()                     \
             .sender(BOT_ID)                           \
             .to_user(["+76459652574"])                \
@@ -33,10 +33,10 @@ message = MessageRequestBuilder()                     \
 
 difft_client.send_message(message)
 
-# due to frequncy liit
+# sleep 1 second due to server-end frequency limit
 time.sleep(1)
 
-# send to group
+# send message to group
 message = MessageRequestBuilder()                         \
             .sender(BOT_ID)                               \
             .to_group("a9de6b3ae8c8456d888c4532b487e822") \

@@ -53,7 +53,8 @@ python3 -m unittest discover
 
 # TODO
 * [x] Auth
-* [ ] Attachment APIs
+* [x] Attachment APIs
+* [x] Message APIs
 * [ ] Group APIs
 * [ ] Account APIs
 * [ ] Team APIs

@@ -58,3 +58,12 @@ python3 -m unittest discover
 * [ ] Group APIs
 * [ ] Account APIs
 * [ ] Team APIs
+
+# CHANGELOG
+## 2022.3.16
+1. support send message
+2. support uploand and download attachment
+3. support append and remove attachment authorization
+
+## init
+1. support authentication

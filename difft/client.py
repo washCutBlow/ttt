@@ -2,8 +2,7 @@ import base64
 import hashlib
 import hmac
 import json
-from logging import exception
-import numbers
+import logging
 import requests
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
@@ -18,11 +17,11 @@ class DifftClient:
         self._auth = Authenticator(appid, key.encode("utf-8"))
         self._host = host
 
-    def upload_attachment(self, send_wuid: str, grouopIds: list, acceptor_wuid: list, attachment: bytes) -> dict:
+    def upload_attachment(self, send_wuid: str, group_ids: list, acceptor_wuid: list, attachment: bytes) -> dict:
         key = hashlib.sha512(attachment).digest()
         fileHash = hashlib.sha256(key).digest()
         fileSize = len(attachment)
-        is_exist_body = dict(wuid=send_wuid, fileHash=base64.b64encode(fileHash).decode("utf-8"), fileSize=fileSize, gids=grouopIds, numbers=acceptor_wuid)
+        is_exist_body = dict(wuid=send_wuid, fileHash=base64.b64encode(fileHash).decode("utf-8"), fileSize=fileSize, gids=group_ids, numbers=acceptor_wuid)
         is_exist_resp = requests.post(url=self._host+constants.URL_ISEXIST, json=is_exist_body, auth=self._auth)
 
         is_exist_resp_obj = json.loads(is_exist_resp.text)
@@ -54,13 +53,14 @@ class DifftClient:
                         encAlg="AES-CBC-SHA256",
                         cipherHash=cipherHash,
                         cipherHashType="MD5",
-                        gids=grouopIds,
+                        gids=group_ids,
                         numbers=acceptor_wuid,
                         )
         # report uploadinfo to server
         upload_info_resp = requests.post(url=self._host+constants.URL_UPLOAD_ATTACHMENT, json=uplooad_info, auth=self._auth)
         upload_info_resp_obj = json.loads(upload_info_resp.text)
-
+        if upload_info_resp_obj.get("status") != 0:
+            raise Exception(upload_info_resp_obj.get("reason"))
         data = upload_info_resp_obj.get("data")
         return dict(
                     authorizeId = data.get("authorizeId"),
@@ -69,7 +69,7 @@ class DifftClient:
                     fileSize = fileSize
                 )
 
-    def download_attachment(self, wuid, key, authorize_id, cipherHash, url=None) -> bytes:
+    def download_attachment(self, wuid, key, authorize_id, cipher_hash, url=None) -> bytes:
         key = base64.b64decode(key)
         if not url:
             fileHash = hashlib.sha256(key).digest()
@@ -82,7 +82,40 @@ class DifftClient:
             url = data.get("url")
         attachment_resp = requests.get(url=url)
         attachment = attachment_resp.content
-        return self.decrypt_attachment(attachment, key, bytes.fromhex(cipherHash))
+        return self.decrypt_attachment(attachment, key, bytes.fromhex(cipher_hash))
+    
+    def append_attachment_authorization(self, wuid, fil_hash, file_size, group_ids, acceptor_wuid):
+        is_exist_body = dict(wuid=wuid, fileHash=fil_hash, fileSize=file_size, gids=group_ids, numbers=acceptor_wuid)
+        is_exist_resp = requests.post(url=self._host+constants.URL_ISEXIST, json=is_exist_body, auth=self._auth)
+        is_exist_resp_obj = json.loads(is_exist_resp.text)
+        if is_exist_resp_obj.get("status")!=0:
+            raise Exception(is_exist_resp_obj.get("reason"))
+
+        data = is_exist_resp_obj.get("data")
+        if not data.get("exists"):
+            raise Exception("file not exist")
+
+        return data.get("authorizeId")
+    
+    def delete_attachment_authorization(self, wuid, filehash, authorizeIds):
+        delete_attachment_auth_body = dict(wuid=wuid, delAuthorizeInfos=[dict(fileHash=filehash, authorizeIds=authorizeIds)])
+        delete_attachment_auth_resp = requests.post(url=self._host+constants.URL_DEL_ATTACHMENT, json=delete_attachment_auth_body, auth=self._auth)
+        delete_attachment_auth_obj = json.loads(delete_attachment_auth_resp.text)
+        if delete_attachment_auth_obj.get("status")!=0:
+            logging.error(delete_attachment_auth_obj.get("reason"))
+            return False
+        return True
+    
+    def send_message(self, msg):
+        send_msg_resp = requests.post(url=self._host + constants.URL_SEND_MSG, json=msg, auth=self._auth)
+        send_msg_resp_obj = json.loads(send_msg_resp.text)
+        if send_msg_resp_obj.get("status") != 0:
+            if "errors" in send_msg_resp_obj:
+                logging.error(send_msg_resp_obj.get("errors"))
+            raise Exception("send message failed")
+        if send_msg_resp_obj.get("errors"):
+            logging.error(send_msg_resp_obj.get("errors"))
+        
 
     def encrypt_attachment(self, attachment, key):
         if len(key) != 64:

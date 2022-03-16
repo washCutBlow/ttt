@@ -19,7 +19,10 @@ APP_ID = "f250845b274f4a5c01"
 APP_SECRET = "w0m6nTOIIspxR0wmGJbEvAOfNnyf"
 BOT_ID="+60000"
 
+# using testing environment by default
 difft_client = DifftClient(APP_ID, APP_SECRET)
+# production environment
+# difft_client = DifftClient(APP_ID, APP_SECRET, "https://xxx.com")
 
 # send to user
 message = MessageRequestBuilder()                     \

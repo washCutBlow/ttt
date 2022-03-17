@@ -75,9 +75,6 @@ attachment = AttachmentBuilder()\
                 .digest(uploaded_attachment.get("cipherHash"))\
                 .build()
 
-# frequency limit
-time.sleep(1)
-
 # 3. third, send message with attachment
 message = MessageRequestBuilder()                           \
             .sender("+60000")                               \

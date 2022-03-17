@@ -68,11 +68,11 @@ uploaded_attachment = difft_client.upload_attachment("+60000", [], ["+7645965257
 
 # 2. second, construct attachment info
 attachment = AttachmentBuilder()\
-                .authorize_id(uploaded_attachment.get("authorizeId"))\
-                .key(uploaded_attachment.get("key"))\
-                .file_size(uploaded_attachment.get("fileSize"))\
-                .file_name("test.txt")\
-                .digest(uploaded_attachment.get("cipherHash"))\
+                .authorize_id(uploaded_attachment.get("authorizeId"))   \
+                .key(uploaded_attachment.get("key"))                    \
+                .file_size(uploaded_attachment.get("fileSize"))         \
+                .file_name("test.txt")                                  \
+                .digest(uploaded_attachment.get("cipherHash"))          \
                 .build()
 
 # 3. third, send message with attachment

@@ -2,8 +2,11 @@
 
 from setuptools import setup
 
+with open('VERSION') as f:
+      version = str(f.read())
+
 setup(name='difft',
-      version='1.0.0',
+      version=version,
       description='Python Distribution Utilities',
       author='difft.org',
       author_email='teams@difft.org',

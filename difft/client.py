@@ -110,9 +110,7 @@ class DifftClient:
         send_msg_resp = requests.post(url=self._host + constants.URL_SEND_MSG, json=msg, auth=self._auth)
         send_msg_resp_obj = json.loads(send_msg_resp.text)
         if send_msg_resp_obj.get("status") != 0:
-            if "errors" in send_msg_resp_obj:
-                logging.error(send_msg_resp_obj.get("errors"))
-            raise Exception("send message failed")
+            raise Exception("send message failed", send_msg_resp_obj.get("errors"), send_msg_resp_obj.get("error"))
         if send_msg_resp_obj.get("errors"):
             logging.error(send_msg_resp_obj.get("errors"))
         

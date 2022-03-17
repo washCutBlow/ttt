@@ -10,6 +10,7 @@ make install
 ```
 
 ## Example
+### Send message
 ```python
 import time
 from difft.client import DifftClient
@@ -44,6 +45,44 @@ message = MessageRequestBuilder()                         \
             .at_user(["+76459652574"])                    \
             .build()
 difft_client.send_message(message)
+```
+### Send attachment
+```python
+import time
+from difft.client import DifftClient
+from difft.message import MessageRequestBuilder
+from difft.attachment import AttachmentBuilder
+
+APP_ID = "f250845b274f4a5c01"
+APP_SECRET = "w0m6nTOIIspxR0wmGJbEvAOfNnyf"
+BOT_ID="+60000"
+
+# 1. first, upload attachment
+plain_attachment = utils.random_str(1024).encode("utf-8")
+uploaded_attachment = self.difft_client.upload_attachment("+60000", [], ["+76459652574"], plain_attachment) 
+
+# 2. second, construct attachment info
+attachment = AttachmentBuilder()\
+                .authorize_id(uploaded_attachment.get("authorizeId"))\
+                .key(uploaded_attachment.get("key"))\
+                .file_size(uploaded_attachment.get("fileSize"))\
+                .file_name("test.txt")\
+                .digest(uploaded_attachment.get("cipherHash"))\
+                .build()
+
+# frequency limit
+time.sleep(1)
+
+# 3. third, send message with attachment
+message = MessageRequestBuilder()                           \
+            .sender("+60000")                               \
+            .to_group("6b1f86fc04264390bdf4468a59b93ef7")   \
+            .message("hello, this is a test message")       \
+            .at_user(["+76459652574"])                      \
+            .attachment(attachment)                         \
+            .timestamp_now()\
+            .build()
+self.difft_client.send_message(message)
 ```
 
 ## Run test

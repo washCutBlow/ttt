@@ -1,6 +1,5 @@
 
 import base64
-from difflib import diff_bytes
 import hashlib
 from time import sleep
 import unittest
@@ -100,10 +99,5 @@ class TestAttachment(unittest.TestCase):
         data = json.loads(resp.text)
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(data.get("status", -1), 0)
-    
-    def test_readfile_and_upload(self):
-        with open('readMe.md', 'r') as f:
-            data = f.read()
-        self.difft_client.upload_attachment("+60000", [], ["+76459652574"], data.encode('utf-8'))
 
 

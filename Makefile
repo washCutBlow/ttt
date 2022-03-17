@@ -1,4 +1,4 @@
-build: clean
+build:
 	python3 setup.py bdist_wheel
 
 clean:
@@ -8,3 +8,6 @@ clean:
 
 install:
 	python3 setup.py install
+
+release: build
+	twine upload dist/*

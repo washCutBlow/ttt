@@ -1,7 +1,7 @@
 # Difft-sdk-python
 ## Install from python package
 ```shell
-pip install https://git.toolsfdg.net/difftim/difft-sdk-python/releases/download/v1.0.0/difft-1.0.0-py3-none-any.whl
+pip install difft
 ```
 
 ## Install from source code

@@ -57,9 +57,14 @@ APP_ID = "f250845b274f4a5c01"
 APP_SECRET = "w0m6nTOIIspxR0wmGJbEvAOfNnyf"
 BOT_ID="+60000"
 
+# using testing environment by default
+difft_client = DifftClient(APP_ID, APP_SECRET)
+# production environment
+# difft_client = DifftClient(APP_ID, APP_SECRET, "https://xxx.com")
+
 # 1. first, upload attachment
 plain_attachment = utils.random_str(1024).encode("utf-8")
-uploaded_attachment = self.difft_client.upload_attachment("+60000", [], ["+76459652574"], plain_attachment) 
+uploaded_attachment = difft_client.upload_attachment("+60000", [], ["+76459652574"], plain_attachment) 
 
 # 2. second, construct attachment info
 attachment = AttachmentBuilder()\
@@ -82,7 +87,7 @@ message = MessageRequestBuilder()                           \
             .attachment(attachment)                         \
             .timestamp_now()\
             .build()
-self.difft_client.send_message(message)
+difft_client.send_message(message)
 ```
 
 ## Run test

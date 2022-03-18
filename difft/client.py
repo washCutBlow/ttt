@@ -149,7 +149,12 @@ class DifftClient:
         """
         Send message
         :param msg: MessageRequest
-        :return: raise exception if failed
+        :return: list of fail reason, 
+                [{ 
+                "wuid":"idxxx", 
+                "groupID":"{wea group id}",
+                "reason":"failed reason"
+                }]
         """
         send_msg_resp = requests.post(url=self._host + constants.URL_SEND_MSG, json=msg, auth=self._auth)
         if send_msg_resp.status_code != 200:

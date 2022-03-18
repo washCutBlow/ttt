@@ -25,7 +25,7 @@ difft_client = DifftClient(APP_ID, APP_SECRET)
 # production environment
 # difft_client = DifftClient(APP_ID, APP_SECRET, "https://xxx.com")
 
-# send message to individuel user
+# send message to users
 message = MessageRequestBuilder()                     \
             .sender(BOT_ID)                           \
             .to_user(["+76459652574"])                \

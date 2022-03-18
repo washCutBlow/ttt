@@ -19,7 +19,11 @@ class AttachmentBuilder:
         return self
     
     def digest(self, cipher_hash):
-        self._attachment["digest"] =  cipher_hash
+        self._attachment["digest"] = cipher_hash
+        return self
+    
+    def content_type(self, content_type):
+        self._attachment["contentType"] = content_type
         return self
     
     def flags(self, flags):

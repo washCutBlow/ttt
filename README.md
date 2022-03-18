@@ -87,6 +87,49 @@ message = MessageRequestBuilder()                           \
 difft_client.send_message(message)
 ```
 
+### Send image
+```python
+import time
+from difft.client import DifftClient
+from difft.message import MessageRequestBuilder
+from difft.attachment import AttachmentBuilder
+
+APP_ID = "f250845b274f4a5c01"
+APP_SECRET = "w0m6nTOIIspxR0wmGJbEvAOfNnyf"
+BOT_ID="+60000"
+
+# using testing environment by default
+difft_client = DifftClient(APP_ID, APP_SECRET)
+# production environment
+# difft_client = DifftClient(APP_ID, APP_SECRET, "https://xxx.com")
+
+# 1. first, upload img
+with open("{/path/to/img}", "rb") as f:
+    img = f.read()
+uploaded_img = difft_client.upload_attachment("+60000", [], ["+76459652574"], img) 
+
+# 2. second, construct attachment info
+# content_type: depend on img extention
+attachment = AttachmentBuilder()\
+                .authorize_id(uploaded_img.get("authorizeId"))   \
+                .key(uploaded_img.get("key"))                    \
+                .file_size(uploaded_img.get("fileSize"))         \
+                .file_name("test.jpg")                           \
+                .content_type("image/jpeg")                      \
+                .digest(uploaded_img.get("cipherHash"))          \
+                .build()
+
+# 3. third, send message with attachment
+message = MessageRequestBuilder()                           \
+            .sender("+60000")                               \
+            .to_group("6b1f86fc04264390bdf4468a59b93ef7")   \
+            .at_user(["+76459652574"])                      \
+            .attachment(attachment)                         \
+            .timestamp_now()\
+            .build()
+difft_client.send_message(message)
+```
+
 ## Run test
 ```shell
 python3 -m unittest discover

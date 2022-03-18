@@ -144,6 +144,10 @@ python3 -m unittest discover
 * [ ] Team APIs
 
 # CHANGELOG
+## 2022.3.18
+1. send meesage return failed list
+2. support set content-type when send attachment
+
 ## 2022.3.16
 1. support send message
 2. support uploand and download attachment

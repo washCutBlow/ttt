@@ -152,11 +152,12 @@ class DifftClient:
         :return: raise exception if failed
         """
         send_msg_resp = requests.post(url=self._host + constants.URL_SEND_MSG, json=msg, auth=self._auth)
+        if send_msg_resp.status_code != 200:
+            raise Exception("server response %d" % send_msg_resp.status_code)
         send_msg_resp_obj = json.loads(send_msg_resp.text)
         if send_msg_resp_obj.get("status") != 0:
             raise Exception("send message failed", send_msg_resp_obj.get("errors"), send_msg_resp_obj.get("error"))
-        if send_msg_resp_obj.get("errors"):
-            logging.error(send_msg_resp_obj.get("errors"))
+        return send_msg_resp_obj.get("errors")
 
     def encrypt_attachment(self, attachment, key):
         if len(key) != 64:

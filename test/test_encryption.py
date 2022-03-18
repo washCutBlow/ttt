@@ -1,4 +1,3 @@
-
 import base64
 import hashlib
 import unittest
@@ -8,6 +7,7 @@ from Crypto.Random import get_random_bytes
 
 APPID = "f250845b274f4a5c01"
 APPSECRET = "w0m6nTOIIspxR0wmGJbEvAOfNnyf"
+
 
 class TestEncryption(unittest.TestCase):
     def test_encryption(self):
@@ -19,4 +19,3 @@ class TestEncryption(unittest.TestCase):
 
         decrypted = client.decrypt_attachment(ciphertext, key, digest)
         self.assertEqual(plaintext, decrypted)
-

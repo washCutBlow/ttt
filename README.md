@@ -139,13 +139,16 @@ python3 -m unittest discover
 * [x] Auth
 * [x] Attachment APIs
 * [x] Message APIs
+* [x] Account APIs
 * [ ] Group APIs
-* [ ] Account APIs
 * [ ] Team APIs
 
 # CHANGELOG
+## 2022.3.23
+1. support get account
+
 ## 2022.3.18
-1. send meesage return failed list
+1. send message return failed list
 2. support set content-type when send attachment
 
 ## 2022.3.16

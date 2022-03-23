@@ -164,6 +164,23 @@ class DifftClient:
             raise Exception("send message failed", send_msg_resp_obj.get("errors"), send_msg_resp_obj.get("error"))
         return send_msg_resp_obj.get("errors")
 
+    def get_account_by_email(self, email):
+        param = dict(email=email)
+        return self.get_account(param)
+
+    def get_account_by_wuid(self, wuid):
+        param = dict(wuid=wuid)
+        return self.get_account(param)
+
+    def get_account(self, params):
+        resp = requests.get(url=self._host + constants.URL_ACCOUNT, params=params, auth=self._auth)
+        if resp.status_code != 200:
+            raise Exception("server response error, code", resp.status_code)
+        resp_obj = json.loads(resp.text)
+        if resp_obj.get("status") != 0:
+            raise Exception(resp_obj.get("reason"))
+        return resp_obj.get("data")
+
     def encrypt_attachment(self, attachment, key):
         if len(key) != 64:
             raise Exception("got invalid length keys (%d bytes)" % len(key))

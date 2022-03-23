@@ -129,6 +129,17 @@ message = MessageRequestBuilder()                           \
             .build()
 difft_client.send_message(message)
 ```
+### Get Account info
+```python
+difft_client.get_account_by_email("xxx@xxx")
+# get multiple account info by email
+difft_client.get_account_by_email("xxx@xxx,xxx@xxx")
+
+
+difft_client.get_account_by_wuid("xxx")
+# get multiple account info by wuid
+difft_client.get_account_by_wuid("xxxx,xxx")
+```
 
 ## Run test
 ```shell

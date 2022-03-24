@@ -140,6 +140,10 @@ difft_client.get_account_by_wuid("xxx")
 # get multiple account info by wuid
 difft_client.get_account_by_wuid("xxxx,xxx")
 ```
+### Get Group info
+```python
+difft_client.get_group_by_botid("xxx")
+```
 
 ## Run test
 ```shell
@@ -151,10 +155,13 @@ python3 -m unittest discover
 * [x] Attachment APIs
 * [x] Message APIs
 * [x] Account APIs
-* [ ] Group APIs
+* [x] Group APIs
 * [ ] Team APIs
 
 # CHANGELOG
+## 2022.3.24
+1. support get group
+
 ## 2022.3.23
 1. support get account
 

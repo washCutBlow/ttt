@@ -180,6 +180,18 @@ class DifftClient:
         if resp_obj.get("status") != 0:
             raise Exception(resp_obj.get("reason"))
         return resp_obj.get("data")
+    
+    def get_group_by_botid(self, botid):
+        params = dict(operator=botid)
+        resp = requests.get(url=self._host + constants.URL_GROUP, params=params, auth=self._auth)
+        if resp.status_code != 200:
+            raise Exception("server response error, code", resp.status_code)
+        resp_obj = json.loads(resp.text)
+        if resp_obj.get("status") != 0:
+            raise Exception(resp_obj.get("reason"))
+        if "groups" in resp_obj.get("data"):
+            return resp_obj.get("data").get("groups")
+        return []
 
     def encrypt_attachment(self, attachment, key):
         if len(key) != 64:

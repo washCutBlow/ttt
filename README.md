@@ -1,4 +1,12 @@
 # Difft-sdk-python
+## Interface
+* send_message
+* get_account_by_email
+* get_account_by_wuid
+* get_group_by_botid
+* upload_attachment
+* download_attachment
+
 ## Install from python package
 ```shell
 pip install difft

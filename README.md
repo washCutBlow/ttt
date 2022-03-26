@@ -16,7 +16,7 @@ secret=w0m6nTOIIspxR0wmGJbEvAOfNnyf
 botid=+60000
 host=https://openapi.test.difft.org
 ``` 
-Also, you can set provide the configuration in command line, e.g
+Also, you can provide the above configuration in command line, e.g
 ```shell
 difft-cli --appid f250845b274f4a5c01 --secret w0m6nTOIIspxR0wmGJbEvAOfNnyf --botid +60000 --host https://openapi.test.difft.org sendmsg -user +76459652574 -msg "hello world"
 ```

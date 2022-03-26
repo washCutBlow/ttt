@@ -16,8 +16,42 @@ pip install difft
 ```shell
 make install
 ```
+## Command-line
+DiffClient provide a command-line tool `difft-cli`, before using `difft-cli`, you should create a configure file `.difft.cfg` in current directory or HOME directory, e.g
+```cfg
+[base]
+appid=f250845b274f4a5c01
+secret=w0m6nTOIIspxR0wmGJbEvAOfNnyf
+botid=+60000
+host=https://openapi.test.difft.org
+``` 
+Also, you can set provide the configuration in command line, e.g
+```shell
+difft-cli --appid f250845b274f4a5c01 --secret w0m6nTOIIspxR0wmGJbEvAOfNnyf --botid +60000 --host https://openapi.test.difft.org sendmsg -user +76459652574 -msg "hello world"
+```
+### Example
+```shell
+# send message to user
+difft-cli sendmsg -user +76459652574 -msg "hello world"
 
-## Example
+# send message to group
+difft-cli sendmsg -group a9de6b3ae8c8456d888c4532b487e822 -msg "hello world"
+
+# send attachment
+difft-cli sendmsg -user +76459652574 -att test.txt
+
+# send image 
+difft-cli sendmsg -user +76459652574 -att test.jpg -att-type image/jpeg
+
+# get account
+difft-cli account -email xxx1@xxx,xxx2@xxxx
+
+# get group by botid
+difft-cli group -bot +60000
+
+```
+
+## Using as a python module
 ### Send message
 ```python
 import time
@@ -167,6 +201,9 @@ python3 -m unittest discover
 * [ ] Team APIs
 
 # CHANGELOG
+## 2022.3.26
+1. support command-line tool 
+
 ## 2022.3.24
 1. support get group
 

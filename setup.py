@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from importlib_metadata import entry_points
 from setuptools import setup
 
 with open('VERSION') as f:
@@ -11,6 +12,9 @@ setup(name='difft',
       author='difft.org',
       author_email='teams@difft.org',
       url='',
+      entry_points={
+            'console_scripts': ['difft-cli=difft.command:main']
+      },
       packages=['difft'],
       python_requires=">=3.6",
       install_requires=[

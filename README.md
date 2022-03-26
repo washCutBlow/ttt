@@ -21,6 +21,7 @@ Also, you can provide the above configuration in command line, e.g
 difft-cli --appid f250845b274f4a5c01 --secret w0m6nTOIIspxR0wmGJbEvAOfNnyf --botid +60000 --host https://openapi.test.difft.org sendmsg -user +76459652574 -msg "hello world"
 ```
 ### Example
+After creating configure file `.difft.cfg` in current directory or HOME directory, you can simply use `difft-cli` as below:
 ```shell
 # send message to user
 difft-cli sendmsg -user +76459652574 -msg "hello world"

@@ -7,15 +7,6 @@
 * upload_attachment
 * download_attachment
 
-## Install from python package
-```shell
-pip install difft
-```
-
-## Install from source code
-```shell
-make install
-```
 ## Command-line
 DiffClient provide a command-line tool `difft-cli`, before using `difft-cli`, you should create a configure file `.difft.cfg` in current directory or HOME directory, e.g
 ```cfg
@@ -49,6 +40,16 @@ difft-cli account -email xxx1@xxx,xxx2@xxxx
 # get group by botid
 difft-cli group -bot +60000
 
+```
+
+## Install from python package
+```shell
+pip install difft
+```
+
+## Install from source code
+```shell
+make install
 ```
 
 ## Using as a python module

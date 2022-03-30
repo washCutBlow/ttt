@@ -82,6 +82,9 @@ difft_client.send_message(message)
 time.sleep(1)
 
 # send message to group
+# groupid can be retrieved from api getGroupByBotId
+# or command-line difft-cli group
+# or base64 decode the group invitation link in wea
 message = MessageRequestBuilder()                         \
             .sender(BOT_ID)                               \
             .to_group("a9de6b3ae8c8456d888c4532b487e822") \

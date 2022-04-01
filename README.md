@@ -74,6 +74,7 @@ message = MessageRequestBuilder()                     \
             .sender(BOT_ID)                           \
             .to_user(["+76459652574"])                \
             .message("hello, this is a test message") \
+            .timestamp_now()                          \
             .build()
 
 difft_client.send_message(message)
@@ -87,6 +88,7 @@ message = MessageRequestBuilder()                         \
             .to_group("a9de6b3ae8c8456d888c4532b487e822") \
             .message("hello, this is a test message")     \
             .at_user(["+76459652574"])                    \
+            .timestamp_now()                              \
             .build()
 difft_client.send_message(message)
 ```
@@ -126,7 +128,7 @@ message = MessageRequestBuilder()                           \
             .message("hello, this is a test message")       \
             .at_user(["+76459652574"])                      \
             .attachment(attachment)                         \
-            .timestamp_now()\
+            .timestamp_now()                                \
             .build()
 difft_client.send_message(message)
 ```
@@ -169,7 +171,7 @@ message = MessageRequestBuilder()                           \
             .to_group("6b1f86fc04264390bdf4468a59b93ef7")   \
             .at_user(["+76459652574"])                      \
             .attachment(attachment)                         \
-            .timestamp_now()\
+            .timestamp_now()                                \
             .build()
 difft_client.send_message(message)
 ```

@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-from importlib_metadata import entry_points
 from setuptools import setup
 
 with open('VERSION') as f:

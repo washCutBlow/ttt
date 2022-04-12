@@ -188,6 +188,11 @@ difft_client.get_account_by_email("xxx@xxx,xxx@xxx")
 difft_client.get_account_by_wuid("xxx")
 # get multiple account info by wuid
 difft_client.get_account_by_wuid("xxxx,xxx")
+
+# get account email
+param = dict(wuid="xxx", operator="xxx")
+difft_client.get_account(param)
+
 ```
 ### Get Group info
 ```python

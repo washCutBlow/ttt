@@ -53,6 +53,12 @@ class MessageRequestBuilder:
             self.message_request['msg'] = {'attachment': attachment}
         return self
     
+    def quote(self, refID, text):
+        if 'msg' in self.message_request:
+            self.message_request['msg']['quote'] = {'refID': refID, 'text': text}
+        else:
+            self.message_request['msg'] = {'quote': {'refID': refID, 'text': text}}
+    
     def build(self):
         return self.message_request
 

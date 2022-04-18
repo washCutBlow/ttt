@@ -213,6 +213,9 @@ python3 -m unittest discover
 * [ ] Team APIs
 
 # CHANGELOG
+## 2022.4.18
+1. support quote
+
 ## 2022.3.26
 1. support command-line tool 
 

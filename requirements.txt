@@ -1,3 +1,5 @@
 requests
 setuptools
 pycryptodome
+websocket-client
+rel

@@ -47,8 +47,8 @@ class Authenticator(requests.auth.AuthBase):
 
         body = r.body
         
-        dataToSign = self._build_data(method, uri, sorted_query_parameters, sorted_headers, body)
-        signature = self._sign(dataToSign)
+        dataToSign = self.build_data(method, uri, sorted_query_parameters, sorted_headers, body)
+        signature = self.sign(dataToSign)
         new_headers = {
             HEADER_NAME_APPID: self._appid,
             HEADER_NAME_TIMESTAMP: signature.timestamp,
@@ -60,7 +60,7 @@ class Authenticator(requests.auth.AuthBase):
         r.headers.update(new_headers)
         return r
     
-    def _build_data(self, method: str, uri: str, parameters: dict, headers: dict, body: bytes) -> bytes:
+    def build_data(self, method: str, uri: str, parameters: dict, headers: dict, body: bytes) -> bytes:
         data = method + ";" + uri + ";"
         for k in parameters:
             for i in parameters[k]:
@@ -79,7 +79,7 @@ class Authenticator(requests.auth.AuthBase):
         
         return data
     
-    def _sign(self, msg: bytes) -> Signature:
+    def sign(self, msg: bytes) -> Signature:
         ts = current_milli_time()
         nonce = get_nonce()
         data = ";".join([self._appid, str(ts), nonce]) + ";" 

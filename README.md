@@ -20,6 +20,7 @@ Also, you can provide the above configuration in command line, e.g
 ```shell
 difft-cli --appid f250845b274f4a5c01 --secret w0m6nTOIIspxR0wmGJbEvAOfNnyf --botid +60000 --host https://openapi.test.difft.org sendmsg -user +76459652574 -msg "hello world"
 ```
+
 ### Example
 After creating configure file `.difft.cfg` in current directory or HOME directory, you can simply use `difft-cli` as below:
 ```shell
@@ -198,7 +199,39 @@ difft_client.get_account(param)
 ```python
 difft_client.get_group_by_botid("xxx")
 ```
+### Callback
+1. https webhook
+2. websocket
+#### Websocket example
+```python
+APPID = "f250845b274f4a5c01"
+APPSECRET = "w0m6nTOIIspxR0wmGJbEvAOfNnyf"
 
+difft_client = DifftClient(APPID, APPSECRET)
+
+def customized_handler(msg):
+    # skip type RECEIPT
+    if msg.get('type')=='TEXT':
+        logging.info('customized handler in')
+        logging.info(msg.get('msg').get('body'))
+        logging.info('customized handler out')
+        
+        message = MessageRequestBuilder() \
+                .sender("+60000")          \
+                .to_user([msg.get('src')]) \
+                .message(msg.get('msg').get('body')) \
+                .build()
+        difft_client.send_message(message)
+
+# testing env
+listener = DifftWsListener(APPID, APPSECRET)
+# prod env
+# listener = DifftWsListener(APPID, APPSECRET, 'openapi.difft.org')
+
+# set you message handler
+listener.handler(customized_handler)
+listener.start()
+```
 ## Run test
 ```shell
 python3 -m unittest discover
@@ -213,6 +246,9 @@ python3 -m unittest discover
 * [ ] Team APIs
 
 # CHANGELOG
+## 2022.4.27
+1. support websocket
+
 ## 2022.4.18
 1. support quote
 

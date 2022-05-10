@@ -58,7 +58,21 @@ class MessageRequestBuilder:
             self.message_request['msg']['quote'] = {'refID': refID, 'text': text}
         else:
             self.message_request['msg'] = {'quote': {'refID': refID, 'text': text}}
+        return self
     
+    def type(self, msg_type):
+        self.message_request['type'] = msg_type
+        return self
+
+    def card(self, appid, id, content, creator=None, timestamp=None):
+        self.message_request['type'] = 'CARD'
+        self.message_request['card'] = dict(appID=appid, id=id, content=content)
+        if creator:
+            self.message_request['card']['creator'] = creator
+        if timestamp:
+            self.message_request['card']['timestamp'] = timestamp
+        return self
+
     def build(self):
         return self.message_request
 

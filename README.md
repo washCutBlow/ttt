@@ -42,6 +42,13 @@ difft-cli account -email xxx1@xxx,xxx2@xxxx
 # get group by botid
 difft-cli group -bot +60000
 
+# send card message to user
+difft-cli sendcard -user +76459652574 -id 1111 -content "### Hello"
+# send card message to group
+difft-cli sendcard -group 8d351378d2664c5aa4893b4d530c61db -id 1111 -content "### Hello"
+# or provide creator and timestamp
+difft-cli sendcard -user +76459652574 -id 1111 -content "### Hello" -creator +76459652574 -ts 1111111111
+
 ```
 
 ## Install from python package

@@ -46,7 +46,31 @@ def send_message(args):
     else:
         raise Exception('please specify user or group')
 
-    difftclient.send_message(message)
+    errs = difftclient.send_message(message)
+    if errs:
+        print(errs)
+
+def send_card(args):
+    appid, secret, botid, host = _parse_config(args)
+    difftclient = DifftClient(appid, secret, host)
+    if args.group:
+        message = MessageRequestBuilder()                                   \
+                .sender(botid)                                              \
+                .to_group(args.group)                                       \
+                .card(appid, args.id, args.content, args.creator, args.ts)  \
+                .build()
+    elif args.user:
+        message = MessageRequestBuilder()                                   \
+            .sender(botid)                                                  \
+            .to_user(args.user.split(','))                                  \
+            .card(appid, args.id, args.content, args.creator, args.ts)      \
+            .build()
+    else:
+        raise Exception('please specify user or group')
+    errs = difftclient.send_message(message)
+    if errs:
+        print(errs)
+
 
 def get_account(args):
     appid, secret, botid, host = _parse_config(args)
@@ -137,6 +161,15 @@ def main():
     parser_group = subparsers.add_parser('group', help="query group info by botid")
     parser_group.add_argument('-bot', type=str, dest='bot', default='', help='bot id, e.g: +60000')
     parser_group.set_defaults(func=get_group)
+
+    parser_card = subparsers.add_parser('sendcard', help="send card message")
+    parser_card.add_argument('-user', type=str, dest='user', default='')
+    parser_card.add_argument('-group', type=str, dest='group', default='')
+    parser_card.add_argument('-id', type=str, dest='id', default='', required=True)
+    parser_card.add_argument('-content', type=str, dest='content', default='', required=True)
+    parser_card.add_argument('-creator', type=str, dest='creator', default=None)
+    parser_card.add_argument('-ts', type=int, dest='ts', default=None)
+    parser_card.set_defaults(func=send_card)
 
     try:
         args = parser.parse_args()

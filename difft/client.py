@@ -145,16 +145,29 @@ class DifftClient:
             return False
         return True
 
-    def send_message(self, msg):
+    def send_message(self, msg, raw_response=False):
         """
         Send message
         :param msg: MessageRequest
+        :param raw_response: whether to get raw response or not
         :return: list of fail reason, 
-                [{ 
-                "wuid":"idxxx", 
-                "groupID":"{wea group id}",
-                "reason":"failed reason"
-                }]
+                [
+                    {
+                    "wuid":"idxxx",
+                    "groupID":"{wea group id}",
+                    "reason":"failed reason"
+                    }
+                ]
+                raw response:
+                {
+                    "status":0, // 0 表示成功，否则为失败
+                    "errors":[{
+                        "wuid":"idxxx",
+                        "groupID":"{wea group id}",
+                        "reason":"failed reason"
+                    }],
+                    "refID":"v1:1649814691000:+800000000" // 当消息可被引用时，返回该消息的refID
+                }
         """
         send_msg_resp = requests.post(url=self._host + constants.URL_SEND_MSG, json=msg, auth=self._auth)
         if send_msg_resp.status_code != 200:
@@ -162,7 +175,10 @@ class DifftClient:
         send_msg_resp_obj = json.loads(send_msg_resp.text)
         if send_msg_resp_obj.get("status") != 0:
             raise Exception("send message failed", send_msg_resp_obj.get("errors"), send_msg_resp_obj.get("error"))
-        return send_msg_resp_obj.get("errors")
+        if raw_response:
+            return send_msg_resp_obj
+        else:
+            return send_msg_resp_obj.get("errors")
 
     def get_account_by_email(self, email):
         param = dict(email=email)

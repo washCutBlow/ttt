@@ -102,6 +102,18 @@ message = MessageRequestBuilder()                         \
             .timestamp_now()                              \
             .build()
 difft_client.send_message(message)
+
+# send quote message
+message = MessageRequestBuilder()                         \
+            .sender(BOT_ID)                               \
+            .to_group("a9de6b3ae8c8456d888c4532b487e822") \
+            .message("hello, this is a test message")     \
+            .at_user(["+76459652574"])                    \
+            .quote("refID", "text")                       \
+            .timestamp_now()                              \
+            .build()
+difft_client.send_message(message)
+
 ```
 ### Send attachment
 ```python
@@ -253,6 +265,10 @@ python3 -m unittest discover
 * [ ] Team APIs
 
 # CHANGELOG
+## 2022.5.13
+1. support getting refID when send message
+## 2022.5.10
+1. difft-cli support card message
 ## 2022.4.27
 1. support websocket
 

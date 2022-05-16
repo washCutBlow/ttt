@@ -157,6 +157,28 @@ message = MessageRequestBuilder()                           \
             .build()
 difft_client.send_message(message)
 ```
+Read from file
+```python
+with open("attachment.txt", "r") as f:
+    plaintext = f.read()
+plaintext = plaintext.encode("utf-8")
+uploaded_attachment = difft_client.upload_attachment("+60000", [], ["+76459652574"], plaintext)
+attachment = AttachmentBuilder() \
+    .authorize_id(uploaded_attachment.get("authorizeId")) \
+    .key(uploaded_attachment.get("key")) \
+    .file_size(uploaded_attachment.get("fileSize")) \
+    .file_name("test.txt") \
+    .digest(uploaded_attachment.get("cipherHash")) \
+    .build()
+message = MessageRequestBuilder() \
+    .sender("+60000") \
+    .to_user(["+76459652574"])\
+    .message("hello, this is a test message") \
+    .attachment(attachment) \
+    .timestamp_now() \
+    .build()
+difft_client.send_message(message)
+```
 
 ### Send image
 ```python

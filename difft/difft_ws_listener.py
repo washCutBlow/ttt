@@ -1,11 +1,9 @@
-import imp
 import logging
 import websocket
 import rel
 import json
 import time
 from difft.auth import Authenticator
-from difft.client import DifftClient
 from difft.constants import *
 
 
@@ -55,21 +53,21 @@ class DifftWsListener:
             rel.signal(2, rel.abort)  # Keyboard Interrupt
             rel.dispatch()
         except Exception as e:
-            logging.error("[DifftWsListener] got error: ", e)
+            logging.error("[DifftWsListener] got error: {}".format(e))
             # retry in 15 sec
             logging.info("[DifftWsListener] will retry in 15 seconds")
             time.sleep(15)
             self.start()
 
     def on_message(self, ws, message):
-        logging.debug("[DifftWsListener] recieve data: " + message)
+        logging.debug("[DifftWsListener] recieve data: {}".format(message))
         try:
             obj = json.loads(message)
             for data in obj.get('messages', []):
                 if 'data' in data:
                     self.handler(data['data'])
         except Exception as e:
-            logging.error("[DifftWsListener] handle message failed, error: ", e)
+            logging.error("[DifftWsListener] handle message failed, error: {}".format(e))
         self.fetch(ws)
     
     def on_error(self, ws, error):

@@ -19,6 +19,8 @@ setup(name='difft',
       python_requires=">=3.6",
       install_requires=[
             "requests",
-            "pycryptodome"
+            "pycryptodome",
+            "websocket-client",
+            "rel"
       ],
       )

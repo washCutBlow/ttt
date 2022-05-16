@@ -1,4 +1,6 @@
 # Difft-sdk-python
+## Python Version
+python requires >= 3.6
 ## Interface
 * send_message
 * get_account_by_email

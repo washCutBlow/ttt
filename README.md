@@ -245,6 +245,11 @@ difft_client.get_group_by_botid("xxx")
 ### Callback
 1. https webhook
 2. websocket
+***websocket和callback(webhook)只能二选一***.  
+
+***if you turn on websocket, then the webhook stop working.***
+
+
 #### Websocket example
 ```python
 APPID = "f250845b274f4a5c01"
@@ -295,6 +300,9 @@ python3 -m unittest discover
 1. difft-cli support card message
 ## 2022.4.27
 1. support websocket
+***websocket和callback(webhook)只能二选一***.  
+
+***if you turn on websocket, then the webhook stop working.***
 
 ## 2022.4.18
 1. support quote

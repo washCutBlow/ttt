@@ -68,11 +68,12 @@ class MessageRequestBuilder:
         self.message_request['type'] = 'CARD'
         self.message_request['card'] = dict(appID=appid, id=id, content=content)
         if fixedWidth:
-            self.message_request['card']['fixedWidth'] = True
+            self.message_request['card']['fixedWidth'] = fixedWidth
         if creator:
             self.message_request['card']['creator'] = creator
         if timestamp:
             self.message_request['card']['timestamp'] = timestamp
+        print (self.message_request)
         return self
 
     def build(self):

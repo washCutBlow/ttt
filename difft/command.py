@@ -57,13 +57,13 @@ def send_card(args):
         message = MessageRequestBuilder()                                   \
                 .sender(botid)                                              \
                 .to_group(args.group)                                       \
-                .card(appid, args.id, args.fixedWidth, args.content, args.creator, args.ts)  \
+                .card(appid, args.id,args.content, args.fixedWidth,  args.creator, args.ts)  \
                 .build()
     elif args.user:
         message = MessageRequestBuilder()                                   \
             .sender(botid)                                                  \
             .to_user(args.user.split(','))                                  \
-            .card(appid, args.id, args.fixedWidth, args.content, args.creator, args.ts)      \
+            .card(appid, args.id,  args.content, args.fixedWidth, args.creator, args.ts)      \
             .build()
     else:
         raise Exception('please specify user or group')
@@ -168,7 +168,7 @@ def main():
     parser_card.add_argument('-id', type=str, dest='id', default='', required=True)
     parser_card.add_argument('-content', type=str, dest='content', default='', required=True)
     parser_card.add_argument('-creator', type=str, dest='creator', default=None)
-    parser_card.add_argument('-fixedWidth', type=bool, dest='fixedWidth', default=False)
+    parser_card.add_argument('-fixedWidth', type=bool, dest='fixedWidth', default=False, required=False, action=argparse.BooleanOptionalAction)
     parser_card.add_argument('-ts', type=int, dest='ts', default=None)
     parser_card.set_defaults(func=send_card)
 

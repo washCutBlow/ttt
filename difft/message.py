@@ -73,7 +73,6 @@ class MessageRequestBuilder:
             self.message_request['card']['creator'] = creator
         if timestamp:
             self.message_request['card']['timestamp'] = timestamp
-        print (self.message_request)
         return self
 
     def build(self):

@@ -42,12 +42,13 @@ class DifftWsListener:
                                 on_open=self.on_open,
                                 on_message=self.on_message,
                                 on_error=self.on_error,
-                                on_close=self.on_close)
+                                on_close=self.on_close,
+                                on_pong=self.on_pong)
 
         try:
             rel.init()
             # ping interval is 30 second
-            self.ws.run_forever(ping_interval=5, dispatcher=rel)
+            self.ws.run_forever(ping_interval=30, dispatcher=rel, ping_timeout=5)
             self.fetch(self.ws)
             
             rel.signal(2, rel.abort)  # Keyboard Interrupt
@@ -82,6 +83,9 @@ class DifftWsListener:
 
     def on_open(self, ws):
         logging.info('[DifftWsListener] websocket connected')
+
+    def on_pong(self, ws, msg):
+        logging.info('[DifftWsListener] got pong response, my appid: {}'.format(self._appid))
 
     def fetch(self, ws):
         ws.send("{\"cmd\":\"fetch\"}")

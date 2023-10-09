@@ -1,0 +1,20 @@
+# Heading 1
+## Heading 2
+### Heading 3
+*italics* _italics_
+**bold** __bold__
+### Dividing line
+---
+[text link](http://wea.difft.org)
+### Code Block
+```
+function test(){
+console.log("Hello world!");
+}
+```
+### Ordered Lists
+1. serial number 1
+2. serial number 2
+### Unordered Lists
+- Unordered Lists
+- Unordered Lists
